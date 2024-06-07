@@ -34,6 +34,19 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
+        <div class="form-group mb-3">
+                <p>Select Type:</p>
+                @foreach ($types as $type)
+                    <div>
+                        <input type="checkbox" name="types[]" value="{{ $type->id }}" class="form-check-input"
+                            {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}>
+                        <label for="" class="form-check-label">{{ $type->name }}</label>
+                    </div>
+                @endforeach
+                @error('types')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-danger">Create</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
