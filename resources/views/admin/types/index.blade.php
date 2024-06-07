@@ -6,8 +6,8 @@
     <div class="alert alert-success">{{session()->get('message')}}</div>
   @endif
   <div class="d-flex justify-content-between align-items-center py-4">
-    <h1>Projects</h1>
-    <a href="{{route('admin.projects.create')}}" class="btn btn-danger">Create new post</a>
+    <h1>Types</h1>
+    <a href="{{route('admin.types.create')}}" class="btn btn-danger">Create new type</a>
   </div>
 
   <table class="table table-striped">
@@ -22,22 +22,22 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($projects as $project)
+      @foreach ($types as $type)
       <tr>
-      <td>{{$project->id}}</td>
-      <td>{{$project->title}}</td>
-      <td>{{$project->slug}}</td>
-      <td>{{$project->created_at}}</td>
-      <td>{{$project->updated_at}}</td>
+      <td>{{$type->id}}</td>
+      <td>{{$type->name}}</td>
+      <td>{{$type->slug}}</td>
+      <td>{{$type->created_at}}</td>
+      <td>{{$type->updated_at}}</td>
       <td>
-        <a href="{{route('admin.projects.show', $project->slug)}}" title="Show" class="text-black px-2"><i
+        <a href="{{route('admin.types.show', $type->slug)}}" title="Show" class="text-black px-2"><i
           class="bi bi-eye"></i></i></a>
-        <a href="{{route('admin.projects.edit', $project->slug)}}" title="Edit" class="text-black px-2"><i
+        <a href="{{route('admin.types.edit', $type->slug)}}" title="Edit" class="text-black px-2"><i
           class="bi bi-pencil-fill"></i></a>
-        <form action="{{route('admin.projects.destroy', $project->slug)}}" method="POST" class="d-inline-block">
+        <form action="{{route('admin.types.destroy', $type->slug)}}" method="POST" class="d-inline-block">
         @csrf
         @method('DELETE')
-        <button type="submit" class="delete-button border-0 bg-transparent" data-item-title="{{ $project->title }}">
+        <button type="submit" class="delete-button border-0 bg-transparent" data-item-title="{{ $type->name }}">
           <i class="bi bi-trash3-fill"></i>
         </button>
         </form>
@@ -47,6 +47,6 @@
     </tbody>
   </table>
 </section>
-{{ $projects->links('vendor.pagination.bootstrap-5') }}
+
 @include('partials.modal-delete')
 @endsection

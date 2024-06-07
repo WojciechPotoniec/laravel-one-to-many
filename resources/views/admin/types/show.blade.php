@@ -1,23 +1,21 @@
 @extends('layouts.app')
-@section('title', $project->title)
+@section('name', $type->name)
 
 @section('content')
 <section>
     <div class="d-flex justify-content-between align-items-center py-4">
-        <h1>{{$project->title}}</h1>
+        <h1>{{$type->name}}</h1>
         <div>
-            <a href="{{route('admin.projects.edit', $project->slug)}}" class="btn btn-secondary">Edit</a>
-            <form action="{{route('admin.projects.destroy', $project->slug)}}" method="POST" class="d-inline-block">
+            <a href="{{route('admin.types.edit', $type->slug)}}" class="btn btn-secondary">Edit</a>
+            <form action="{{route('admin.types.destroy', $type->slug)}}" method="POST" class="d-inline-block">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="delete-button btn btn-danger" data-item-title="{{ $project->title }}">
+                <button type="submit" class="delete-button btn btn-danger" data-item-name="{{ $type->name }}">
                     Delete Post</i>
                 </button>
             </form>
         </div>
     </div>
-    <p>{!!$project->content!!}</p>
-    <img src="{{asset('storage/' . $project->image)}}" alt="{{$project->title}}">
 </section>
 @include('partials.modal-delete')
 @endsection
