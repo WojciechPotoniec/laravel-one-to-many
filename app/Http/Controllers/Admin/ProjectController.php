@@ -19,6 +19,8 @@ class ProjectController extends Controller
     public function index()
     {
         // $projects = Project::all();
+        
+
         $projects = Project::paginate(5);
         return view('admin.projects.index', compact('projects'));
     }
@@ -77,7 +79,6 @@ class ProjectController extends Controller
                 Storage::delete($project->image);
             }
             $name = $request->image->getClientOriginalName();
-            //dd($name);
             $path = Storage::putFileAs('uploads', $request->image, $name);
             $form_data['image'] = $path;
         }
