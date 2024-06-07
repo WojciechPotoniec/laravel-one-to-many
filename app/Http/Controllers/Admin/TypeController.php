@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -23,7 +22,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.types.create');
     }
 
     /**
@@ -31,7 +30,10 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $form_data['slug'] = Type::generateSlug($form_data['name']);
+        $newPost = Type::create($form_data);
+        return redirect()->route('admin.types.show', $newPost->slug);
     }
 
     /**
@@ -39,7 +41,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        //
+        return view('admin.types.show', compact('type'));
     }
 
     /**
@@ -47,7 +49,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -55,7 +57,12 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $form_data = $request->all();
+        if ($type->name !== $form_data['name']) {
+            $form_data['slug'] = Type::generateSlug($form_data['name']);
+        }
+        $type->update($form_data);
+        return redirect()->route('admin.types.show', $type->slug);
     }
 
     /**
@@ -63,6 +70,8 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        
+        $type->delete();
+        return redirect()->route('admin.types.index')->with('message', $type->name . ' è stato eliminato');
     }
 }
