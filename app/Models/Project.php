@@ -10,7 +10,7 @@ use App\Models\Type;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','image', 'content', 'slug'];
+    protected $fillable = ['title','image', 'content', 'slug', 'type_id'];
 
     public static function generateSlug($title){
         $slug = Str::slug($title, '-');
