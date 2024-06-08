@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+
 use App\Models\Project;
+use App\Models\Type;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // Uso questo per gestire i file di upload del client
 // use Illuminate\Support\Facades\DB;
@@ -30,7 +33,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -70,7 +74,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $form_data = $request->all();
+        $form_data = $request->validated();
         if ($project->title !== $form_data['title']) {
             $form_data['slug'] = Project::generateSlug($form_data['title']);
         }

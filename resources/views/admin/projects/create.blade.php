@@ -34,11 +34,11 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-group mb-3">
+        <!-- <div class="form-group mb-3">
                 <p>Select Type:</p>
                 @foreach ($types as $type)
                     <div>
-                        <input type="checkbox" name="types[]" value="{{ $type->id }}" class="form-check-input"
+                        <select type="checkbox" name="types[]" value="{{ $type->id }}" class="form-check-input"
                             {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}>
                         <label for="" class="form-check-label">{{ $type->name }}</label>
                     </div>
@@ -46,7 +46,19 @@
                 @error('types')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-            </div>
+            </div> -->
+            <div class="mb-3">
+                <label for="type_id" class="form-label">Select type</label>
+                <select name="type_id" id="type_id" class="form-control @error('type_id') is-invalid @enderror">
+                    <option value="">Select type</option>
+                  @foreach ($types as $type)
+                      <option value="{{$type->id}}" {{ $type->id == old('type_id') ? 'selected' : '' }}>{{$type->name}}</option>
+                  @endforeach
+                </select>
+                @error('type_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-danger">Create</button>
             <button type="reset" class="btn btn-secondary">Reset</button>

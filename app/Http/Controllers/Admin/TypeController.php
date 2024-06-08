@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Models\Type;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
@@ -30,7 +31,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $form_data = $request->all();
+        $form_data = $request->validated();
         $form_data['slug'] = Type::generateSlug($form_data['name']);
         $newPost = Type::create($form_data);
         return redirect()->route('admin.types.show', $newPost->slug);
@@ -47,9 +48,9 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Type $type)
+    public function edit(Type $type, Project $project)
     {
-        return view('admin.types.edit', compact('type'));
+        return view('admin.types.edit', compact('type', 'project'));
     }
 
     /**
@@ -57,7 +58,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        $form_data = $request->all();
+        $form_data = $request->validated();
         if ($type->name !== $form_data['name']) {
             $form_data['slug'] = Type::generateSlug($form_data['name']);
         }
